@@ -12,118 +12,178 @@
             <div id="input_city">
                 <input type="text" placeholder="Search city" name="position" data-positioning="px">
             </div>
-            <input class="button" type="button" value="\/">
+            <input class="button" type="button" value=&#x21e9;>
         </div>
-        <div class="main_grid">
-            <div id="top_left">
-                <div class="container">
-                    <div class="features">
+        <div id="mainDiv" class="main_flex">
+            <!-- ADD WHOLE FLEXELEM -->
+                <div id="flexElem" class="CflexElem">
+                    <div id="features" class="Cfeatures">
                         <div>
-                            <p>Temp:</p>
-                            <p>29.0°C</p>
+                            <p id="tempName">Temp:</p>
+                            <p id="tempVal">29.0°C</p>
                         </div>
                         <div>
-                            <p>Pressure:</p>
-                            <p>1700 hPa</p>
+                            <p id="presName">Pressure:</p>
+                            <p id="presVal">1700 hPa</p>
                         </div>
                         <div>
-                            <p>Cloudy:</p>
-                            <p>90%</p>
+                            <p id="cloudName">Cloudy:</p>
+                            <p id="cloudV">90%</p>
                         </div>
                         <div>
-                            <p>Humidity:</p>
-                            <p>XYZ</p>
+                            <p id="humName">Humidity:</p>
+                            <p id="humVal">XYZ</p>
                         </div>
-                        <div>
+                        <!-- <div>
                             <p>BLANK:</p>
                             <p>BLANK</p>
-                        </div>
+                        </div> -->
                     </div>
-                    <div class="present">
+                    <div id="present" class="Cpresent">
                         <div class="present_image"></div>
                         <br/><p>Wrocław</p>
-                        <p>Temperaure: <span>25.0°C</span></p>
+                        <p>Temperature: <span>25.0°C</span></p>
                     </div>
-                    <div class="hours">
+                    <div id="hours" class="Chours">
                         <div id="_1">
-                            <div class="hour_image"></div>
+                            <div class="hour_image1"></div>
                             <p>12:00</p>
                             <p>25.5°C </p>
                         </div>
                         <div id="_2">
-                            <div class="hour_image"></div>
+                            <div class="hour_image2"></div>
                             <p>13:00</p>
                             <p>25.5°C </p>
                         </div>
                         <div id="_3">
-                            <div class="hour_image"></div>
+                            <div class="hour_image3"></div>
                             <p>14:00</p>
                             <p>25.5°C </p>
                         </div>
                         <div id="_4">
-                            <div class="hour_image"></div>
+                            <div class="hour_image4"></div>
                             <p>15:00</p>
                             <p>25.5°C </p>
                         </div>
                         <div id="_5">
-                            <div class="hour_image"></div>
+                            <div class="hour_image5"></div>
                             <p>16:00</p>
                             <p>25.5°C </p>
                         </div>
                         <div id="_6">
-                            <div class="hour_image"></div>
+                            <div class="hour_image6"></div>
                             <p>17:00</p>
                             <p>22.5°C </p>
                         </div>
                     </div>
                 </div>
             </div>
-            <div id="top_center">
-                <div class="container">
-                    <div class="features">
-
-                    </div>
-                    <div class="present">
-
-                    </div>
-                    <div class="hours">
-
-                    </div>
-                </div>
-            </div>
-            <div id="top_right">
-                <div class="container">
-                    <div class="features">
-
-                    </div>
-                    <div class="present">
-
-                    </div>
-                    <div class="hours">
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <script type="text/javascript">
             var button1 = document.getElementsByClassName("button");
             var searchInput = document.getElementById("input_city").firstElementChild;
-            var gridOut = document.getElementsByClassName("main_grid");
 
             const searchInputDown = () => {
                 const suffix = searchInput.dataset.positioning; //px
                 document.documentElement.style.setProperty(`--${searchInput.name}`, 0 + suffix);
-                button1[0].value = "/\\";
+                button1[0].value ="\u21E7";
             }
 
-            delBtn[0].addEventListener("click", function(e){
-                
+            const searchInputUp = () => {
+                const suffix = searchInput.dataset.positioning; //px
+                document.documentElement.style.setProperty(`--${searchInput.name}`, -50 + suffix);
+                (button1[0].value="\u21E9");
+            }
+
+            button1[0].addEventListener("click", function(){
+                button1[0].value === "\u21E9" ? searchInputDown() : searchInputUp(); 
+                createElement();
             });
 
-            button1[0].addEventListener("click", function(e){
-                searchInputDown();
-            });
+            const createElement = () => {
+                /*FOR EXAMPLE*/
+                var temperature = "23.0",
+                    pressure = 1800,
+                    cloudy = 90,
+                    humidity = 45,
+                    city = "Warszawa",
+                    presentTemerature = "23.1",
+                    hour1 = "12:00", temp1 = "23.1", hour2 = "13:00", temp2 = "23.5",
+                    hour3 = "14:00", temp3 = "24.0", hour4 = "15:00", temp4 = "22.5",
+                    hour5 = "16:00", temp5 = "21.0", hour6 = "17:00", temp6 = "19.0";
+
+                const _featuresTab = ["Temp:", `${temperature}°C`, "Pressure:", `${pressure}hPa`, 
+                                        "Cloudy:", `${cloudy}%`, "Humidity", `${humidity}%`];
+                const _featuresIdTab = ["tempName1", "tempVal1", "presName1", "presVal1", "cloudName1", "cloudVal1", 
+                                    "humName1", "humVal1"];
+                const _hoursTab = [hour1, `${temp1}°C`, hour2, `${temp2}°C`, hour3, `${temp3}°C`,
+                                    hour4, `${temp4}°C`, hour5, `${temp5}°C`, hour6, `${temp6}°C`];
+
+                // CREATE flexElem
+                var newDiv = document.createElement("DIV");
+                newDiv.id = "flexElem1";
+                newDiv.className = "CflexElem";
+                newDiv.style.height = "9em";
+                // ADD flexElem TO FLEX BOX
+                document.getElementById("mainDiv").appendChild(newDiv);
+                // CREATE features
+                var newFeatures = document.createElement("DIV");
+                newFeatures.id = "features1";
+                newFeatures.className = "Cfeatures";
+                // CREATE present
+                var newPresent = document.createElement("DIV");
+                newPresent.id = "present1";
+                newPresent.className = "Cpresent";
+                // CREATE hours
+                var newHours = document.createElement("DIV");
+                newHours.id = "hours1";
+                newHours.className = "Chours";
+                // ADD ALL ELEMENTS TO flexElem
+                document.getElementById("flexElem1").appendChild(newFeatures);
+                document.getElementById("flexElem1").appendChild(newPresent);
+                document.getElementById("flexElem1").appendChild(newHours);
+                /* FEATURES */
+                for(var i = 0; i < 4; i++){
+                    var div = document.createElement("DIV");
+                    div.id = `div${i}`;
+                    document.getElementById("features1").appendChild(div);
+                    for(var j = 2*i; j < 2*(i+1); j++){
+                        var p = document.createElement("P");
+                        p.id = _featuresIdTab[j];
+                        p.innerText = _featuresTab[j];
+                        p.style.margin="0px"; 
+                        document.getElementById(`div${i}`).appendChild(p);
+                    }
+                }
+                /* PRESENT */
+                var div = document.createElement("DIV");
+                div.id = "image";
+                div.className = "present_image"
+                document.getElementById("present1").appendChild(div);
+
+                var p = document.createElement("P");
+                p.innerText = `\n${city}`;
+                p.style.marginTop = "0.9em";
+                document.getElementById("present1").appendChild(p);
+                
+                var p = document.createElement("P");
+                p.innerText = `Temperature: ${presentTemerature}°C`;
+                document.getElementById("present1").appendChild(p);
+
+                /* HOURS */
+                for(var i = 1; i < 7; i++){
+                    var div = document.createElement("DIV");
+                    div.id = `_${i}1`;
+                    document.getElementById("hours1").appendChild(div);
+                    var image = document.createElement("DIV");
+                    image.className = `hour_image${i}`;
+                    document.getElementById(`_${i}1`).appendChild(image);
+                    for (var j = 0; j < 2; j++) {
+                        var p = document.createElement("P");
+                        p.innerText = _hoursTab[j];
+                        document.getElementById(`_${i}1`).appendChild(p);
+                    }
+                }
+            }
 
         </script>
     </body>
