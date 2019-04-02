@@ -27,7 +27,7 @@ body .search_city {
     position: fixed;
     height: 2.5em;
     padding: 0em;
-    left: 42%;
+    left: 45%;
     right: auto;
     opacity: 0.5;
     z-index: 2;
@@ -78,7 +78,6 @@ body .background_image {
     left: 10%;
     right: 10%;
     top: 5em;
-    border: 1px solid black;
 }
 
 
