@@ -5,15 +5,18 @@
         <meta charset="utf-8"/>
         <title>Forecast</title>
         <link href="style.css" rel="stylesheet" type=" text/css">
+        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     </head>
     <body>
         <div class="background_image"></div>
-        <div class="search_city">
+        <form class="search_city" id="search_city">
             <div id="input_city">
-                <input type="text" placeholder="Search city" name="position" data-positioning="px">
+                <input type="text" placeholder="Search city" name="position" data-positioning="px" autocomplete="off"
+                    required>
             </div>
-            <input class="button" type="button" value="\/">
-        </div>
+            <input type="submit" class="button" id="submit" value="\/">
+            <ul id="hints"></ul>
+        </form>
         <div class="main_grid">
             <div id="top_left">
                 <div class="container">
@@ -105,7 +108,7 @@
                 </div>
             </div>
         </div>
-
+        
         <script type="text/javascript">
             var button1 = document.getElementsByClassName("button");
             var searchInput = document.getElementById("input_city").firstElementChild;
@@ -117,14 +120,15 @@
                 button1[0].value = "/\\";
             }
 
-            delBtn[0].addEventListener("click", function(e){
+            // delBtn[0].addEventListener("click", function(e){
                 
-            });
+            // });
 
             button1[0].addEventListener("click", function(e){
                 searchInputDown();
             });
 
         </script>
+        <script src="script.js"></script>
     </body>
 </html>
