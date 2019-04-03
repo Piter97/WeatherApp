@@ -61,14 +61,13 @@ function getWeather(e){
         e.preventDefault();
         let value = (this.querySelector('[name="position"]')).value;
         let city ='';
-        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${value},pl&units=metric&appid=bed4e5796874d1288318fc8b245e8d3e`)
+        fetch(`https://api.openweathermap.org/data/2.5/forecast/hourly?q=${value},pl&units=metric&appid=bed4e5796874d1288318fc8b245e8d3e`)
             .then((res) => res.json())
             .then((data) => {
                 console.log(data);
                 city = `<h2>Pogoda</h2>
                 <div>
-                <h3>${data.name}</h3>
-                <p>${data.main.temp}</p>
+                <h3>${data.city.name}</h3>
                 </div>
             `;
             //document.getElementById('output').innerHTML = city;
@@ -76,7 +75,6 @@ function getWeather(e){
             .catch((err) =>{
                 alert('Nie znaleziono miasta',err);
             });
-            console.log(this)
         this.reset();
         document.getElementById('hints').innerHTML='';
     }
@@ -84,14 +82,13 @@ function getWeather(e){
         e.preventDefault();
         let value = e.target.innerText;
         let city = '';
-        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${value},pl&units=metric&appid=bed4e5796874d1288318fc8b245e8d3e`)
+        fetch(`https://api.openweathermap.org/data/2.5/forecast/hourly?q=${value},pl&units=metric&appid=bed4e5796874d1288318fc8b245e8d3e`)
             .then((res) => res.json())
             .then((data) => {
                 console.log(data);
                 city = `<h2>Pogoda</h2>
                 <div>
-                <h3>${data.name}</h3>
-                <p>${data.main.temp}</p>
+                <h3>${data.city.name}</h3>
                 </div>
             `;
                 //document.getElementById('output').innerHTML = city;
