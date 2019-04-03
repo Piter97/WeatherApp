@@ -17,6 +17,7 @@ data.forEach(function(city){
 document.getElementById('search_city').addEventListener('keyup', findCity)
 document.getElementById('search_city').addEventListener('submit', getWeather)
 document.getElementById('search_city').addEventListener('keypress', getWeather)
+document.getElementById('hints').addEventListener('click',getWeather)
 
 // correctPL = string => string.normalize('NFD').replace(/[\u0300-\u036f]/g, "").replace(/\u0142/g, "l");
 
@@ -29,7 +30,8 @@ function findCity(e){
 
     if (e.target.value.length>2){
         countryList.forEach((hint) => {
-            if(hint.toLowerCase().indexOf(text) != -1){
+            let compare = hint;
+            if(compare.toLowerCase().indexOf(text) != -1){
                 let li = document.createElement('li');
                 li.className = 'list'
                 li.appendChild(document.createTextNode(hint));
@@ -74,9 +76,32 @@ function getWeather(e){
             .catch((err) =>{
                 alert('Nie znaleziono miasta',err);
             });
+            console.log(this)
         this.reset();
         document.getElementById('hints').innerHTML='';
-        }          
+    }
+    else if(e.type == "click"){
+        e.preventDefault();
+        let value = e.target.innerText;
+        let city = '';
+        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${value},pl&units=metric&appid=bed4e5796874d1288318fc8b245e8d3e`)
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                city = `<h2>Pogoda</h2>
+                <div>
+                <h3>${data.name}</h3>
+                <p>${data.main.temp}</p>
+                </div>
+            `;
+                //document.getElementById('output').innerHTML = city;
+            })
+            .catch((err) => {
+                alert('Nie znaleziono miasta', err);
+            });
+        document.getElementById('search_city').reset();
+        document.getElementById('hints').innerHTML = '';
+    }      
 }
     
 
