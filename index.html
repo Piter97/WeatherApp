@@ -22,6 +22,47 @@
         </div>
         
         <script type="text/javascript">
+            var date = new Date();
+            //var day = date.getDay();
+            var month = date.getMonth()+1;
+            var seasonImage = document.getElementsByClassName("background_image")[0];
+            
+            //geographic seasons
+            if(month == 12 && month < 3){       //winter
+                seasonImage.style.background = "url(./images/winter.jpg)";
+                seasonImage.style.backgroundRepeat = "no-repeat";
+                seasonImage.style.backgroundSize = "100%";
+            } 
+            else if (month >= 3 && month < 6){      //spring 
+                seasonImage.style.background = "url(./images/spring.jpg)";
+                seasonImage.style.backgroundRepeat = "no-repeat";
+                seasonImage.style.backgroundSize = "100%";
+            } 
+            else if (month >= 6 && month < 9){      //summer
+                seasonImage.style.background = "url(./images/summer.jpg)";
+                seasonImage.style.backgroundRepeat = "no-repeat";
+                seasonImage.style.backgroundSize = "100%";
+            }
+            else if (month >= 9 && month < 12){         //autumn
+                seasonImage.style.background = "url(./images/autumn.jpg)";
+                seasonImage.style.backgroundRepeat = "no-repeat";
+                seasonImage.style.backgroundSize = "100%";
+            }
+            
+            /*API*/
+            // const APP_URL = "api.openweathermap.org/data/2.5 / weather ? q =";
+            // const APP_APPID = ",pl&appid=bed4e5796874d1288318fc8b245e8d3e";
+            let countryList = [];
+            fetch('list.json')
+            .then((res) => res.json())
+            .then((data) => {
+                data.forEach((city) => {
+                    if (city.country == "PL") {
+                        countryList.push(city.name);
+                    }
+                });
+            });
+
             var searchBtn = document.getElementsByClassName("button");
             var searchInput = document.getElementById("input_city");
 
@@ -49,6 +90,7 @@
                 else{
                     var value = -80;
                     searchInputUp(value);
+                    searchInput.value = null;
                 }
             });
 
@@ -94,7 +136,7 @@
                     ident = 1;
 
                 /*KUBY WERSJA*/
-                const x = `
+                /*const x = `
                     <div id="flexElem${ident}" class="CflexElem">
                         <div id="features${ident}" class="Cfeatures">
                             <div>
@@ -152,86 +194,86 @@
                             </div>
                         </div>
                     </div>`;
-                document.getElementById("mainDiv").innerHTML = x;
-                //console.log(ident);
+                document.getElementById("mainDiv").innerHTML = x;*/
+                console.log(ident);
 
                 /*MOJA WERSJA*/
-                // const _featuresIdTab = [`tempName${ident}`, `tempVal${ident}`, `presName${ident}`,
-                // `presVal${ident}`, `cloudName${ident}`, `cloudVal${ident}`, `humName${ident}`, `humVal${ident}`];
-                // // CREATE flexElem
-                // var newDiv = document.createElement("DIV");
-                // newDiv.id = `flexElem${ident}`;
-                // newDiv.className = "CflexElem";
-                // newDiv.dataset.percent = "%";
-                // newDiv.name = "topElementPosition";
-                // newDiv.style.height = "9em";
-                // newDiv.ondblclick = function () {
-                //     var suffix = this.dataset.percent; //%
-                //     document.documentElement.style.setProperty(`--${newDiv.name}`, 50 + suffix);
-                //     console.log(this.name);
-                // };
-                // // ADD flexElem TO FLEX BOX
-                // document.getElementById("mainDiv").appendChild(newDiv);
+                const _featuresIdTab = [`tempName${ident}`, `tempVal${ident}`, `presName${ident}`,
+                `presVal${ident}`, `cloudName${ident}`, `cloudVal${ident}`, `humName${ident}`, `humVal${ident}`];
+                // CREATE flexElem
+                var newDiv = document.createElement("DIV");
+                newDiv.id = `flexElem${ident}`;
+                newDiv.className = "CflexElem";
+                newDiv.dataset.percent = "%";
+                newDiv.name = "topElementPosition";
+                newDiv.style.height = "9em";
+                newDiv.onclick = function () {
+                    var suffix = this.dataset.percent; //%
+                    document.documentElement.style.setProperty(`--${newDiv.name}`, 50 + suffix);
+                    console.log(this.name);
+                };
+                // ADD flexElem TO FLEX BOX
+                document.getElementById("mainDiv").appendChild(newDiv);
 
-                // // CREATE FEATURES
-                // var newFeatures = document.createElement("DIV");
-                // newFeatures.id = `features${ident}`;
-                // newFeatures.className = "Cfeatures";
-                // newFeatures.style.paddingTop = "1.5em";
-                // // CREATE present
-                // var newPresent = document.createElement("DIV");
-                // newPresent.id = `present${ident}`;
-                // newPresent.className = "Cpresent";
-                // // CREATE hours
-                // var newHours = document.createElement("DIV");
-                // newHours.id = `hours${ident}`;
-                // newHours.className = "Chours";
-                // // ADD ALL ELEMENTS TO flexElem
-                // document.getElementById(`flexElem${ident}`).appendChild(newFeatures);
-                // document.getElementById(`flexElem${ident}`).appendChild(newPresent);
-                // document.getElementById(`flexElem${ident}`).appendChild(newHours);
+                // CREATE FEATURES
+                var newFeatures = document.createElement("DIV");
+                newFeatures.id = `features${ident}`;
+                newFeatures.className = "Cfeatures";
+                newFeatures.style.paddingTop = "1.5em";
+                // CREATE present
+                var newPresent = document.createElement("DIV");
+                newPresent.id = `present${ident}`;
+                newPresent.className = "Cpresent";
+                // CREATE hours
+                var newHours = document.createElement("DIV");
+                newHours.id = `hours${ident}`;
+                newHours.className = "Chours";
+                // ADD ALL ELEMENTS TO flexElem
+                document.getElementById(`flexElem${ident}`).appendChild(newFeatures);
+                document.getElementById(`flexElem${ident}`).appendChild(newPresent);
+                document.getElementById(`flexElem${ident}`).appendChild(newHours);
 
-                // /* FEATURES */
-                // for (var i = 0; i < 4; i++) {
-                //     var div = document.createElement("DIV");
-                //     div.id = `div${i}${ident}`;
-                //     document.getElementById(`features${ident}`).appendChild(div);
-                //     for (var j = 2 * i; j < 2 * (i + 1); j++) {
-                //         var p = document.createElement("P");
-                //         p.id = _featuresIdTab[j];
-                //         p.innerText = _featuresTab[j];
-                //         p.style.margin = "0px";
-                //         document.getElementById(`div${i}${ident}`).appendChild(p);
-                //     }
-                // }
+                /* FEATURES */
+                for (var i = 0; i < 4; i++) {
+                    var div = document.createElement("DIV");
+                    div.id = `div${i}${ident}`;
+                    document.getElementById(`features${ident}`).appendChild(div);
+                    for (var j = 2 * i; j < 2 * (i + 1); j++) {
+                        var p = document.createElement("P");
+                        p.id = _featuresIdTab[j];
+                        p.innerText = _featuresTab[j];
+                        p.style.margin = "0px";
+                        document.getElementById(`div${i}${ident}`).appendChild(p);
+                    }
+                }
 
-                // /* PRESENT */
-                // var div = document.createElement("DIV");
-                // div.id = "image";
-                // div.className = "present_image"
-                // document.getElementById(`present${ident}`).appendChild(div);
-                // var p = document.createElement("P");
-                // p.innerText = `\n${city}`;
-                // p.style.marginTop = "0.9em";
-                // document.getElementById(`present${ident}`).appendChild(p);
-                // var p = document.createElement("P");
-                // p.innerText = `Temperature: ${presentTemerature}°C`;
-                // document.getElementById(`present${ident}`).appendChild(p);
+                /* PRESENT */
+                var div = document.createElement("DIV");
+                div.id = "image";
+                div.className = "present_image"
+                document.getElementById(`present${ident}`).appendChild(div);
+                var p = document.createElement("P");
+                p.innerText = `\n${city}`;
+                p.style.marginTop = "0.9em";
+                document.getElementById(`present${ident}`).appendChild(p);
+                var p = document.createElement("P");
+                p.innerText = `Temperature: ${presentTemerature}°C`;
+                document.getElementById(`present${ident}`).appendChild(p);
 
-                // /* HOURS */
-                // for (var i = 1; i < 7; i++) {
-                //     var div = document.createElement("DIV");
-                //     div.id = `_${i}${ident}`;
-                //     document.getElementById(`hours${ident}`).appendChild(div);
-                //     var image = document.createElement("DIV");
-                //     image.className = `hour_image${i}`;
-                //     document.getElementById(`_${i}${ident}`).appendChild(image);
-                //     for (var j = 0; j < 2; j++) {
-                //         var p = document.createElement("P");
-                //         p.innerText = _hoursTab[j];
-                //         document.getElementById(`_${i}${ident}`).appendChild(p);
-                //     }
-                // }
+                /* HOURS */
+                for (var i = 1; i < 7; i++) {
+                    var div = document.createElement("DIV");
+                    div.id = `_${i}${ident}`;
+                    document.getElementById(`hours${ident}`).appendChild(div);
+                    var image = document.createElement("DIV");
+                    image.className = `hour_image${i}`;
+                    document.getElementById(`_${i}${ident}`).appendChild(image);
+                    for (var j = 0; j < 2; j++) {
+                        var p = document.createElement("P");
+                        p.innerText = _hoursTab[j];
+                        document.getElementById(`_${i}${ident}`).appendChild(p);
+                    }
+                }
             }
         </script>
     </body>
