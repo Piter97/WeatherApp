@@ -14,106 +14,119 @@
                     <input id="submit" type="submit" value="+">
                     <input id="input_city" type="text" placeholder="Search city" name="position" data-positioning="px">
                 </div>
+                <ul id="hints"></ul>
             </form>
             <input class="button" type="button" value=&#x21e9;>
         </div>
         <div id="mainDiv" class="main_flex">
-            <!-- ADD WHOLE FLEXELEM -->
+            <!-- ADD FLEXELEM HERE-->
         </div>
         
         <script type="text/javascript">
-            var date = new Date();
-            //var day = date.getDay();
-            var month = date.getMonth()+1;
-            var seasonImage = document.getElementsByClassName("background_image")[0];
-            
-            //geographic seasons
-            if(month == 12 && month < 3){       //winter
-                seasonImage.style.background = "url(./images/winter.jpg)";
-                seasonImage.style.backgroundRepeat = "no-repeat";
-                seasonImage.style.backgroundSize = "100%";
-            } 
-            else if (month >= 3 && month < 6){      //spring 
-                seasonImage.style.background = "url(./images/spring.jpg)";
-                seasonImage.style.backgroundRepeat = "no-repeat";
-                seasonImage.style.backgroundSize = "100%";
-            } 
-            else if (month >= 6 && month < 9){      //summer
-                seasonImage.style.background = "url(./images/summer.jpg)";
-                seasonImage.style.backgroundRepeat = "no-repeat";
-                seasonImage.style.backgroundSize = "100%";
-            }
-            else if (month >= 9 && month < 12){         //autumn
-                seasonImage.style.background = "url(./images/autumn.jpg)";
-                seasonImage.style.backgroundRepeat = "no-repeat";
-                seasonImage.style.backgroundSize = "100%";
-            }
-            
-            /*API*/
-            // const APP_URL = "api.openweathermap.org/data/2.5 / weather ? q =";
-            // const APP_APPID = ",pl&appid=bed4e5796874d1288318fc8b245e8d3e";
-            let countryList = [];
-            fetch('list.json')
-            .then((res) => res.json())
-            .then((data) => {
-                data.forEach((city) => {
-                    if (city.country == "PL") {
-                        countryList.push(city.name);
-                    }
-                });
-            });
-
             var searchBtn = document.getElementsByClassName("button");
             var searchInput = document.getElementById("input_city");
-
-            /*FOR EXAMPLE*/
-            var temperature = "23.0",
-                pressure = 1800,
-                cloudy = 90,
-                humidity = 45,
-                city = "Warszawa",
-                presentTemerature = "23.1",
-                hour1 = "12:00", temp1 = "23.1", hour2 = "13:00", temp2 = "23.5",
-                hour3 = "14:00", temp3 = "24.0", hour4 = "15:00", temp4 = "22.5",
-                hour5 = "16:00", temp5 = "21.0", hour6 = "17:00", temp6 = "19.0";
-
-            const _featuresTab = ["Temp:", `${temperature}°C`, "Pressure:", `${pressure}hPa`,
-                "Cloudy:", `${cloudy}%`, "Humidity", `${humidity}%`];
-            const _hoursTab = [hour1, `${temp1}°C`, hour2, `${temp2}°C`, hour3, `${temp3}°C`,
-                hour4, `${temp4}°C`, hour5, `${temp5}°C`, hour6, `${temp6}°C`];
+            var presentTemerature, city;
+            var _featuresTab = ["Temp:", , "Pressure:", , "Cloudy:", , "Humidity", ];
+            var _hoursTab = [];
 
             searchBtn[0].addEventListener("click", function(){
                 if(searchBtn[0].value === "\u21E9"){
                     var value = 0;
-                    searchInputDown(value); 
+                    searchInputDown(value);
                 }
                 else{
                     var value = -80;
                     searchInputUp(value);
                     searchInput.value = null;
+                    document.getElementById('hints').innerHTML='';
                 }
             });
 
-            document.getElementById("submit").addEventListener("click", function (e) {
+            /*API*/
+            //const APP_URL = "api.openweathermap.org/data/2.5 / weather ? q =";
+            //const APP_APPID = ",pl&appid=bed4e5796874d1288318fc8b245e8d3e";
+            let countryList = [];
+            fetch('list.json')
+                .then((res) => res.json())
+                .then((data) => {
+                    data.forEach((city) => {
+                        if (city.country == "PL") {
+                            countryList.push(city.name);
+                        }
+                    });
+                });
+
+            /*Interactive list of cities*/
+            document.getElementById("myForm").addEventListener('keyup', (e) => {
+                let list = document.getElementById('hints');
+                let text = e.target.value.toLowerCase();
+                let items = list.getElementsByTagName('li');
+                list.style.position = "absolute";
+                list.innerHTML = '';
+
+                if (e.target.value.length > 2) {
+                    countryList.forEach((hint) => {
+                        let compare = hint;
+                        if (compare.toLowerCase().indexOf(text) != -1) {
+                            let li = document.createElement('li');
+                            li.className = 'list'
+                            li.appendChild(document.createTextNode(hint));
+                            list.appendChild(li);
+                        }
+                    });
+                }
+                
+                /* if the city is already on the list */
+                Array.from(items).forEach((item) => {
+                    var itemName = item.innerText;
+                    if (itemName.toLowerCase().indexOf(text) == -1) {
+                        item.remove();
+                    }
+                });
+                //let elements = document.querySelectorAll('.list');
+                for (var i = 1; i < items.length; i++) { if (items[0].innerText==items[i].innerText) {
+                        items[i].remove();
+                    } 
+                } 
+            });
+
+            /* ASSING JSON VALUES TO DOCUMENT.ELEMENT */
+            document.getElementById("submit").addEventListener("click", async function (e) {
                 e.preventDefault();
-                event.preventDefault();
                 if (searchInput.value != "") {
-                    city = searchInput.value;
-                    createElement();
+                    let value = searchInput.value;
+                    await fetch(`https://api.openweathermap.org/data/2.5/forecast/hourly?q=${value},pl&units=metric&appid=bed4e5796874d1288318fc8b245e8d3e`)
+                        .then((res) => res.json())
+                        .then((data) => {
+                            city = data.city.name;  //city
+                            presentTemerature = data.city.country//present temperature
+                            _featuresTab[1] = `${data.city.id}°C`; //sensed temperature
+                            _featuresTab[3] = `${data.city.id}hPa`; //pressure
+                            _featuresTab[5] = `${data.city.id}%`; //cloudy
+                            _featuresTab[7] = `${data.city.id}%`; //humidity
+                            _hoursTab[0] = "12:00" //hour1
+                            _hoursTab[1] = "42.1°C`" //temp1
+                            _hoursTab[2] = "13:00" //hour2
+                            _hoursTab[3] = "25.2°C`" //temp2
+                            _hoursTab[4] = "14:00" //hour3
+                            _hoursTab[5] = "31.1°C`" //temp3
+                            _hoursTab[6] = "15:00" //hour4
+                            _hoursTab[7] = "16.3°C`" //temp4
+                            _hoursTab[8] = "16:00" //hour5
+                            _hoursTab[9] = "15.3°C`" //temp5
+                            _hoursTab[10] = "17:00" //hour6
+                            _hoursTab[11] = "10.4°C`" //temp6
+                            createElement();
+                        })
+                        .catch((err) =>{
+                            alert('Nie znaleziono miasta', err);
+                        });
                     searchInput.value = null;
+                    document.getElementById('hints').innerHTML='';
                 }
-            });
+            });            
 
-            searchInput.addEventListener("keyup", function (event) {
-                event.preventDefault();
-                if (event.keyCode == 13 && searchInput.value != "") {
-                    city = searchInput.value;
-                    createElement();
-                    searchInput.value = null;
-                }
-            });
-
-            /*  FUNCTIONS   */
+            /* FUNCTIONS */
             const searchInputDown = (value) => {
                 const suffix = searchInput.dataset.positioning; //px
                 document.documentElement.style.setProperty(`--${searchInput.name}`, value + suffix);
@@ -125,6 +138,7 @@
                 (searchBtn[0].value = "\u21E9");
             }
             const createElement = () => {
+                /* id for every new element adding to page */
                 var ident = 0;
                 if (document.getElementById("flexElem1")) {   //if element already exists
                     element = document.getElementById("flexElem1").id;
@@ -135,72 +149,11 @@
                 else
                     ident = 1;
 
-                /*KUBY WERSJA*/
-                /*const x = `
-                    <div id="flexElem${ident}" class="CflexElem">
-                        <div id="features${ident}" class="Cfeatures">
-                            <div>
-                                <p id="tempName${ident}">Temp:</p>
-                                <p id="tempVal${ident}">30.0°C</p>
-                            </div>
-                            <div>
-                                <p id="presName${ident}">Pressure:</p>
-                                <p id="presVal${ident}">1700 hPa</p>
-                            </div>
-                            <div>
-                                <p id="cloudName${ident}">Cloudy:</p>
-                                <p id="cloudV${ident}">90%</p>
-                            </div>
-                            <div>
-                                <p id="humName${ident}">Humidity:</p>
-                                <p id="humVal${ident}">XYZ</p>
-                            </div>
-                        </div>
-                        <div id="present${ident}" class="Cpresent">
-                            <div class="present_image"></div>
-                            <br/><p>Wrocław</p>
-                            <p>Temperature: <span>25.0°C</span></p>
-                        </div>
-                        <div id="hours${ident}" class="Chours">
-                            <div id="_1${ident}">
-                                <div class="hour_image1"></div>
-                                <p>12:00</p>
-                                <p>25.5°C </p>
-                            </div>
-                            <div id="_2${ident}">
-                                <div class="hour_image2"></div>
-                                <p>13:00</p>
-                                <p>25.5°C </p>
-                            </div>
-                            <div id="_3${ident}">
-                                <div class="hour_image3"></div>
-                                <p>14:00</p>
-                                <p>25.5°C </p>
-                            </div>
-                            <div id="_4${ident}">
-                                <div class="hour_image4"></div>
-                                <p>15:00</p>
-                                <p>25.5°C </p>
-                            </div>
-                            <div id="_5${ident}">
-                                <div class="hour_image5"></div>
-                                <p>16:00</p>
-                                <p>25.5°C </p>
-                            </div>
-                            <div id="_6${ident}">
-                                <div class="hour_image6"></div>
-                                <p>17:00</p>
-                                <p>22.5°C </p>
-                            </div>
-                        </div>
-                    </div>`;
-                document.getElementById("mainDiv").innerHTML = x;*/
-                console.log(ident);
-
-                /*MOJA WERSJA*/
+                /*Array to assing new id to each paragraph requierd it*/
                 const _featuresIdTab = [`tempName${ident}`, `tempVal${ident}`, `presName${ident}`,
-                `presVal${ident}`, `cloudName${ident}`, `cloudVal${ident}`, `humName${ident}`, `humVal${ident}`];
-                // CREATE flexElem
+                    `presVal${ident}`, `cloudName${ident}`, `cloudVal${ident}`, `humName${ident}`, `humVal${ident}`];
+
+                /* CREATE flexElem(new element to add) */
                 var newDiv = document.createElement("DIV");
                 newDiv.id = `flexElem${ident}`;
                 newDiv.className = "CflexElem";
@@ -212,23 +165,23 @@
                     document.documentElement.style.setProperty(`--${newDiv.name}`, 50 + suffix);
                     console.log(this.name);
                 };
-                // ADD flexElem TO FLEX BOX
+                /* ADD flexElem TO FLEX BOX(main element) */
                 document.getElementById("mainDiv").appendChild(newDiv);
 
-                // CREATE FEATURES
+                /* CREATE FEATURES */
                 var newFeatures = document.createElement("DIV");
                 newFeatures.id = `features${ident}`;
                 newFeatures.className = "Cfeatures";
                 newFeatures.style.paddingTop = "1.5em";
-                // CREATE present
+                /* CREATE present */
                 var newPresent = document.createElement("DIV");
                 newPresent.id = `present${ident}`;
                 newPresent.className = "Cpresent";
-                // CREATE hours
+                /* CREATE hours */
                 var newHours = document.createElement("DIV");
                 newHours.id = `hours${ident}`;
                 newHours.className = "Chours";
-                // ADD ALL ELEMENTS TO flexElem
+                /* ADD ALL ELEMENTS TO flexElem(new element to add) */
                 document.getElementById(`flexElem${ident}`).appendChild(newFeatures);
                 document.getElementById(`flexElem${ident}`).appendChild(newPresent);
                 document.getElementById(`flexElem${ident}`).appendChild(newHours);
@@ -246,7 +199,6 @@
                         document.getElementById(`div${i}${ident}`).appendChild(p);
                     }
                 }
-
                 /* PRESENT */
                 var div = document.createElement("DIV");
                 div.id = "image";
@@ -259,7 +211,6 @@
                 var p = document.createElement("P");
                 p.innerText = `Temperature: ${presentTemerature}°C`;
                 document.getElementById(`present${ident}`).appendChild(p);
-
                 /* HOURS */
                 for (var i = 1; i < 7; i++) {
                     var div = document.createElement("DIV");

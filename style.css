@@ -22,6 +22,9 @@ body{
 
 body .background_image {
     position: absolute;
+    background-image: url(./images/spring.jpg);
+    background-repeat: no-repeat;
+    background-size: 100%;
     filter: blur(3px);
     height: 100%;
     width: 100%;
