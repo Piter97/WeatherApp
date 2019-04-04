@@ -1,8 +1,6 @@
 var searchBtn = document.getElementsByClassName("button");
 var searchInput = document.getElementById("input_city");
 var presentTemerature, city;
-var _featuresTab = ["Temp:", , "Pressure:", , "Cloudy:", , "Humidity",];
-var _hoursTab = [];
 
 searchBtn[0].addEventListener("click", function () {
     if (searchBtn[0].value === "\u21E9") {
@@ -74,25 +72,14 @@ document.getElementById("submit").addEventListener("click", async function (e) {
         await fetch(`https://api.openweathermap.org/data/2.5/forecast/hourly?q=${value},pl&units=metric&appid=bed4e5796874d1288318fc8b245e8d3e`)
             .then((res) => res.json())
             .then((data) => {
-                city = data.city.name;  //city
-                // presentTemerature = data.city.country//present temperature
-                // _featuresTab[1] = `${data.city.id}°C`; //sensed temperature
-                // _featuresTab[3] = `${data.city.id}hPa`; //pressure
-                // _featuresTab[5] = `${data.city.id}%`; //cloudy
-                // _featuresTab[7] = `${data.city.id}%`; //humidity
-                // _hoursTab[0] = "12:00" //hour1
-                // _hoursTab[1] = "42.1°C`" //temp1
-                // _hoursTab[2] = "13:00" //hour2
-                // _hoursTab[3] = "25.2°C`" //temp2
-                // _hoursTab[4] = "14:00" //hour3
-                // _hoursTab[5] = "31.1°C`" //temp3
-                // _hoursTab[6] = "15:00" //hour4
-                // _hoursTab[7] = "16.3°C`" //temp4
-                // _hoursTab[8] = "16:00" //hour5
-                // _hoursTab[9] = "15.3°C`" //temp5
-                // _hoursTab[10] = "17:00" //hour6
-                // _hoursTab[11] = "10.4°C`" //temp6
-                createElement(data.city.id, data.city.id, data.city.id, data.city.id);
+                var object = {
+                    cityName: data.city.name,
+                    temp: data.city.id,
+                    cloudy: data.city.id,
+                    humidity: data.city.id,
+                    pressure: data.city.id
+                }
+                createElement(object);
             })
             .catch((err) => {
                 alert('Nie znaleziono miasta', err);
@@ -114,7 +101,7 @@ const searchInputUp = (value) => {
     (searchBtn[0].value = "\u21E9");
 }
 
-const createElement = (val1, val2, val3, val4) => {
+const createElement = (object) => {
     const main = document.getElementById('mainDiv');
     const el = document.createElement("div");
     el.className = "CflexElem";
@@ -122,25 +109,25 @@ const createElement = (val1, val2, val3, val4) => {
     newDiv=`<div class="Cfeatures">
                 <div>
                     <p>Temp:</p>
-                    <p>${val1}</p>
+                    <p>${object.temp}</p>
                 </div>
                 <div>
                     <p>Cloudy:</p>
-                    <p>${val2}%</p>
+                    <p>${object.cloudy}%</p>
                 </div>
                 <div>
                     <p>Humidty:</p>
-                    <p>${val3}%</p>
+                    <p>${object.humidity}%</p>
                 </div>
                 <div>
                     <p>Pressure:</p>
-                    <p>${val4}hPa</p>
+                    <p>${object.prssure}hPa</p>
                 </div>
             </div>
             <div class = "Cpresent">
                 <div class="present_image"></div>
                 </br>
-                <p>city</p>
+                <p>${object.cityName}</p>
                 <p>23.6</p>
             </div>
             <div class="Chours">
