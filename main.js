@@ -65,14 +65,14 @@ document.getElementById("myForm").addEventListener('keyup', (e) => {
 });
 
 /* ASSING JSON VALUES TO DOCUMENT.ELEMENT */
-document.getElementById("submit").addEventListener("click", async function (e) {
+document.getElementById("submit").addEventListener("click", function (e) {
     e.preventDefault();
     if (searchInput.value != "") {
         let value = searchInput.value;
-        await fetch(`https://api.openweathermap.org/data/2.5/forecast/hourly?q=${value},pl&units=metric&appid=bed4e5796874d1288318fc8b245e8d3e`)
+        fetch(`https://api.openweathermap.org/data/2.5/forecast/hourly?q=${value},pl&units=metric&appid=bed4e5796874d1288318fc8b245e8d3e`)
             .then((res) => res.json())
             .then((data) => {
-                var object = {
+                const object = {
                     cityName: data.city.name,
                     temp: data.city.id,
                     cloudy: data.city.id,
@@ -121,7 +121,7 @@ const createElement = (object) => {
                 </div>
                 <div>
                     <p>Pressure:</p>
-                    <p>${object.prssure}hPa</p>
+                    <p>${object.pressure}hPa</p>
                 </div>
             </div>
             <div class = "Cpresent">
@@ -163,5 +163,5 @@ const createElement = (object) => {
                 </div>  
             </div>`;
     el.innerHTML = newDiv;
-    main.appendChild(el); //Dodawanie gotowego dziecka, przypisana jest klasa "element" wiec wystarczy tylko obrobic w css i gotowe :) 
+    main.appendChild(el);
 }
