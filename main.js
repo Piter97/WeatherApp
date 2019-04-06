@@ -178,7 +178,7 @@ const createElement = (object) => {
     newDiv=`<div class="Cfeatures">
                 <div>
                     <p>Temp:</p>
-                    <p>${object.temp}</p>
+                    <p>${object.temp}°C</p>
                 </div>
                 <div>
                     <p>Cloudy:</p>
@@ -197,38 +197,38 @@ const createElement = (object) => {
                 <div class="present_image" style="background-image:url(./images/weather_icons/${object.icon}.png"></div>
                 </br>
                 <p>${object.cityName}</p>
-                <p>${object.temp}</p>
+                <p>${object.temp}°C</p>
             </div>
             <div class="Chours">
                 <div>
                     <div class = "hour_image1" style="background-image:url(./images/weather_icons/${object.icon1}.png)"></div>
                     <p>${object.hour1.substr(object.hour1.indexOf(' '),3)}:00</p>
-                    <p>${object.temp1} °C</p>
+                    <p>${object.temp1}°C</p>
                 </div>
                 <div>
                     <div class = "hour_image2" style="background-image:url(./images/weather_icons/${object.icon2}.png)"></div>
                     <p>${object.hour2.substr(object.hour1.indexOf(' '),3)}:00</p>
-                    <p>${object.temp2} °C</p>
+                    <p>${object.temp2}°C</p>
                 </div>
                 <div>  
                     <div class = "hour_image3" style="background-image:url(./images/weather_icons/${object.icon3}.png)"> </div> 
                     <p>${object.hour3.substr(object.hour1.indexOf(' '),3)}:00</p>
-                    <p>${object.temp3} °C</p>
+                    <p>${object.temp3}°C</p>
                 </div>
                 <div>
                     <div class = "hour_image4" style="background-image:url(./images/weather_icons/${object.icon4}.png)"> </div>
                     <p>${object.hour4.substr(object.hour1.indexOf(' '),3)}:00</p>
-                    <p>${object.temp4} °C</p>
+                    <p>${object.temp4}°C</p>
                 </div> 
                 <div>
                     <div class = "hour_image5" style="background-image:url(./images/weather_icons/${object.icon5}.png)"></div>
                     <p>${object.hour5.substr(object.hour1.indexOf(' '),3)}:00</p>
-                    <p>${object.temp5} °C</p>
+                    <p>${object.temp5}°C</p>
                 </div> 
                 <div>
                     <div class = "hour_image6" style="background-image:url(./images/weather_icons/${object.icon6}.png)"></div>
                     <p>${object.hour6.substr(object.hour1.indexOf(' '),3)}:00</p>
-                    <p>${object.temp6} °C</p>
+                    <p>${object.temp6}°C</p>
                 </div>  
             </div>`;
     console.log(object);
