@@ -171,7 +171,6 @@ body .search_city {
 }
 
 .main_flex .Chours .hour_image1 {
-    background-image: url(./images/weather_icons/12.png);
     position: absolute;
     background-repeat: no-repeat;
     background-size: contain;
@@ -182,7 +181,6 @@ body .search_city {
 }
 
 .main_flex .Chours .hour_image2 {
-    background-image: url(./images/weather_icons/12.png);
     position: absolute;
     background-repeat: no-repeat;
     background-size: contain;
@@ -193,7 +191,6 @@ body .search_city {
 }
 
 .main_flex .Chours .hour_image3 {
-    background-image: url(./images/weather_icons/13.png);
     position: absolute;
     background-repeat: no-repeat;
     background-size: contain;
@@ -204,7 +201,6 @@ body .search_city {
 }
 
 .main_flex .Chours .hour_image4 {
-    background-image: url(./images/weather_icons/14.png);
     position: absolute;
     background-repeat: no-repeat;
     background-size: contain;
@@ -215,7 +211,6 @@ body .search_city {
 }
 
 .main_flex .Chours .hour_image5 {
-    background-image: url(./images/weather_icons/15.png);
     position: absolute;
     background-repeat: no-repeat;
     background-size: contain;
@@ -226,7 +221,6 @@ body .search_city {
 }
 
 .main_flex .Chours .hour_image6 {
-    background-image: url(./images/weather_icons/16.png);
     position: absolute;
     background-repeat: no-repeat;
     background-size: contain;
@@ -253,6 +247,9 @@ body .search_city {
     z-index: 1;
     opacity: 1;
 }
-
-
+/* Dodane przez Kube */
+ul{
+    position: absolute;
+    list-style: none;
+}
 
