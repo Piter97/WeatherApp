@@ -63,11 +63,6 @@ document.getElementById("myForm").addEventListener('keyup', (e) => {
     }
 });
 
-/* ASSING JSON VALUES TO DOCUMENT.ELEMENT */
-// document.getElementById("submit").addEventListener("click", function (e) {
-//     e.preventDefault();
-//     if (searchInput.value != "") {
-
 document.getElementById('myForm').addEventListener('submit', getWeather)
 document.getElementById('myForm').addEventListener('keypress', getWeather)
 document.getElementById('hints').addEventListener('click', getWeather)
@@ -75,86 +70,96 @@ document.getElementById('hints').addEventListener('click', getWeather)
 function getWeather(e) {
     if (e.keyCode == 13 || e.type == "submit") {
         e.preventDefault();
-
-        let value = searchInput.value;
-        fetch(`https://api.openweathermap.org/data/2.5/forecast/hourly?q=${value},pl&units=metric&appid=bed4e5796874d1288318fc8b245e8d3e`)
+        if ((document.getElementById("mainDiv").childElementCount + 1) > 9)
+        {
+            alert("You can only create nine forecasts!");
+        }
+        else{
+            let value = searchInput.value;
+            fetch(`https://api.openweathermap.org/data/2.5/forecast/hourly?q=${value},pl&units=metric&appid=bed4e5796874d1288318fc8b245e8d3e`)
             .then((res) => res.json())
             .then((data) => {
-                const object = {
-                    cityName: data.city.name,
-                    temp: data.list[1].main.temp,
-                    icon: data.list[1].weather[0].icon,
-                    cloudy: data.list[1].clouds.all,
-                    humidity: data.list[1].main.humidity,
-                    pressure: data.list[1].main.pressure,
-                    hour1: data.list[2].dt_txt,
-                    temp1: data.list[2].main.temp,
-                    icon1: data.list[2].weather[0].icon,
-                    hour2: data.list[3].dt_txt,
-                    temp2: data.list[3].main.temp,
-                    icon2: data.list[3].weather[0].icon,
-                    hour3: data.list[4].dt_txt,
-                    temp3: data.list[4].main.temp,
-                    icon3: data.list[4].weather[0].icon,
-                    hour4: data.list[5].dt_txt,
-                    temp4: data.list[5].main.temp,
-                    icon4: data.list[5].weather[0].icon,
-                    hour5: data.list[6].dt_txt,
-                    temp5: data.list[6].main.temp,
-                    icon5: data.list[6].weather[0].icon,
-                    hour6: data.list[7].dt_txt,
-                    temp6: data.list[7].main.temp,
-                    icon6: data.list[7].weather[0].icon
-                }
-                createElement(object);
-            })
-            .catch((err) => {
-                console.log(err);
-                alert('Nie znaleziono miasta', err);
-            });
-        this.reset();
-        document.getElementById('hints').innerHTML = '';
+                    const object = {
+                        cityName: data.city.name,
+                        temp: data.list[1].main.temp,
+                        icon: data.list[1].weather[0].icon,
+                        cloudy: data.list[1].clouds.all,
+                        humidity: data.list[1].main.humidity,
+                        pressure: data.list[1].main.pressure,
+                        hour1: data.list[2].dt_txt,
+                        temp1: data.list[2].main.temp,
+                        icon1: data.list[2].weather[0].icon,
+                        hour2: data.list[3].dt_txt,
+                        temp2: data.list[3].main.temp,
+                        icon2: data.list[3].weather[0].icon,
+                        hour3: data.list[4].dt_txt,
+                        temp3: data.list[4].main.temp,
+                        icon3: data.list[4].weather[0].icon,
+                        hour4: data.list[5].dt_txt,
+                        temp4: data.list[5].main.temp,
+                        icon4: data.list[5].weather[0].icon,
+                        hour5: data.list[6].dt_txt,
+                        temp5: data.list[6].main.temp,
+                        icon5: data.list[6].weather[0].icon,
+                        hour6: data.list[7].dt_txt,
+                        temp6: data.list[7].main.temp,
+                        icon6: data.list[7].weather[0].icon
+                    }
+                    createElement(object);
+                })
+                .catch((err) => {
+                    console.log(err);
+                    alert('Cant find the city', err);
+                });
+            this.reset();
+            document.getElementById('hints').innerHTML = '';
+        } 
     }
     else if (e.type == "click") {
         e.preventDefault();
-        let value = e.target.innerText;
-        fetch(`https://api.openweathermap.org/data/2.5/forecast/hourly?q=${value},pl&units=metric&appid=bed4e5796874d1288318fc8b245e8d3e`)
-            .then((res) => res.json())
-            .then((data) => {
-                var object = {
-                    cityName: data.city.name,
-                    temp: data.list[1].main.temp,
-                    icon: data.list[1].weather[0].icon,
-                    cloudy: data.list[1].clouds.all,
-                    humidity: data.list[1].main.humidity,
-                    pressure: data.list[1].main.pressure,
-                    hour1: data.list[2].dt_txt,
-                    temp1: data.list[2].main.temp,
-                    icon1: data.list[2].weather[0].icon,
-                    hour2: data.list[3].dt_txt,
-                    temp2: data.list[3].main.temp,
-                    icon2: data.list[3].weather[0].icon,
-                    hour3: data.list[4].dt_txt,
-                    temp3: data.list[4].main.temp,
-                    icon3: data.list[4].weather[0].icon,
-                    hour4: data.list[5].dt_txt,
-                    temp4: data.list[5].main.temp,
-                    icon4: data.list[5].weather[0].icon,
-                    hour5: data.list[6].dt_txt,
-                    temp5: data.list[6].main.temp,
-                    icon5: data.list[6].weather[0].icon,
-                    hour6: data.list[7].dt_txt,
-                    temp6: data.list[7].main.temp,
-                    icon6: data.list[7].weather[0].icon
-                }
-                createElement(object);
-            })
-            .catch((err) => {
-                console.log(err);
-                alert('Nie znaleziono miasta', err);
-            });
-        document.getElementById('myForm').reset();
-        document.getElementById('hints').innerHTML = '';
+        if ((document.getElementById("mainDiv").childElementCount + 1) > 9) {
+            alert("You can only create nine forecasts!");
+        }
+        else{
+            let value = e.target.innerText;
+            fetch(`https://api.openweathermap.org/data/2.5/forecast/hourly?q=${value},pl&units=metric&appid=bed4e5796874d1288318fc8b245e8d3e`)
+                .then((res) => res.json())
+                .then((data) => {
+                    var object = {
+                        cityName: data.city.name,
+                        temp: data.list[1].main.temp,
+                        icon: data.list[1].weather[0].icon,
+                        cloudy: data.list[1].clouds.all,
+                        humidity: data.list[1].main.humidity,
+                        pressure: data.list[1].main.pressure,
+                        hour1: data.list[2].dt_txt,
+                        temp1: data.list[2].main.temp,
+                        icon1: data.list[2].weather[0].icon,
+                        hour2: data.list[3].dt_txt,
+                        temp2: data.list[3].main.temp,
+                        icon2: data.list[3].weather[0].icon,
+                        hour3: data.list[4].dt_txt,
+                        temp3: data.list[4].main.temp,
+                        icon3: data.list[4].weather[0].icon,
+                        hour4: data.list[5].dt_txt,
+                        temp4: data.list[5].main.temp,
+                        icon4: data.list[5].weather[0].icon,
+                        hour5: data.list[6].dt_txt,
+                        temp5: data.list[6].main.temp,
+                        icon5: data.list[6].weather[0].icon,
+                        hour6: data.list[7].dt_txt,
+                        temp6: data.list[7].main.temp,
+                        icon6: data.list[7].weather[0].icon
+                    }
+                    createElement(object);
+                })
+                .catch((err) => {
+                    console.log(err);
+                    alert('Nie znaleziono miasta', err);
+                });
+            document.getElementById('myForm').reset();
+            document.getElementById('hints').innerHTML = '';
+        }
     }
 };
 
