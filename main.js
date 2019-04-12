@@ -1,33 +1,80 @@
-var searchBtn = document.getElementsByClassName("button");
-var searchInput = document.getElementById("input_city");
-var presentTemerature, city;
+var searchBtn = document.getElementsByClassName("fas fa-plus-square fa-2x");
+var input = document.getElementById("searchBar");
+var presentTemerature;
+var city = document.getElementById('searchCity');
+
+
+/*Background change */
+const zmianaTla = () => {
+    const date = new Date();
+    const month = date.getMonth();
+    const hour = date.getHours();
+    let cssString;
+
+    if (month >= 2 && month < 5 && hour > 6 && hour < 19) {
+        cssString = "background-image:url(./images/spring.jpg)";
+        document.body.insertAdjacentHTML("beforeend", `<div id="backgroundImage" style="${cssString}"></div>`);
+    } else if (month >= 2 && month < 5 && (hour >= 19 || hour <= 6)) {
+        cssString = "background-image:url(./images/springNight.jpg)";
+        document.body.insertAdjacentHTML("beforeend", `<div id="backgroundImage" style="${cssString}"></div>`);
+    } else if (month >= 5 && month < 8 && hour > 5 && hour < 20) {
+        cssString = "background-image:url(./images/summer.jpg)";
+        document.body.insertAdjacentHTML("beforeend", `<div id="backgroundImage" style="${cssString}"></div>`);
+    } else if (month >= 5 && month < 8 && (hour >= 20 || hour <= 5)) {
+        cssString = "background-image:url(./images/summerNight.jpg)";
+        document.body.insertAdjacentHTML("beforeend", `<div id="backgroundImage" style="${cssString}"></div>`);
+    } else if (month >= 9 && month < 11 && hour > 7 && hour < 18) {
+        cssString = "background-image:url(./images/autumn.jpg)";
+        document.body.insertAdjacentHTML("beforeend", `<div id="backgroundImage" style="${cssString}"></div>`);
+    } else if (month >= 9 && month < 11 && (hour >= 18 || hour <= 7)) {
+        cssString = "background-image:url(./images/autumnNight.jpg)";
+        document.body.insertAdjacentHTML("beforeend", `<div id="backgroundImage" style="${cssString}"></div>`);
+    } else if ((month >= 0 && month < 2 || month === 11) && hour > 8 && hour < 16) {
+        cssString = "background-image:url(./images/winter.jpg)";
+        document.body.insertAdjacentHTML("beforeend", `<div id="backgroundImage" style="${cssString}"></div>`);
+    } else if ((month >= 0 && month < 2 || month === 11) && (hour >= 16 || hour <= 8)) {
+        cssString = "background-image:url(./images/winterNight.jpg)";
+        document.body.insertAdjacentHTML("beforeend", `<div id="backgroundImage" style="${cssString}"></div>`);
+    } else {
+        cssString = "background-image:url(./images/sunset.jpg)";
+        document.body.insertAdjacentHTML("beforeend", `<div id="backgroundImage" style="${cssString}"></div>`);
+    }
+}
+document.addEventListener('load', zmianaTla());
+
+/*animacja SearchBar */
+const mouseOn = () => {
+    city.style.boxShadow = '0px 0px 15px 3px rgba(0,0,0,0.8)';
+    city.style.opacity = '1';
+    city.style.height = '40px';
+    city.style.width = '305px';
+    city.style.transition = '.1s';
+}
+document.getElementById('searchCity').addEventListener("mouseover", mouseOn);
+
+
+const mouseOut = () => {
+    city.style.boxShadow = 'none';
+    city.style.opacity = '0.7';
+    city.style.height = '40px';
+    city.style.width = '300px';
+    city.style.transition = '.1s';
+}
+document.getElementById('searchCity').addEventListener("mouseout", mouseOut);
+
+
 
 searchBtn[0].addEventListener("click", function () {
     if (searchBtn[0].value === "\u21E9") {
         var value = 0;
-        searchInputDown(value);
-    }
-    else {
+        inputDown(value);
+    } else {
         var value = -80;
-        searchInputUp(value);
-        searchInput.value = null;
+        inputUp(value);
+        input.value = null;
         document.getElementById('hints').innerHTML = '';
     }
 });
-
-/*API*/
-//const APP_URL = "api.openweathermap.org/data/2.5 / weather ? q =";
-//const APP_APPID = ",pl&appid=bed4e5796874d1288318fc8b245e8d3e";
-let countryList = [];
-fetch('list.json')
-    .then((res) => res.json())
-    .then((data) => {
-        data.forEach((city) => {
-            if (city.country == "PL") {
-                countryList.push(city.name);
-            }
-        });
-    });
 
 /*Interactive list of cities*/
 document.getElementById("myForm").addEventListener('keyup', (e) => {
@@ -63,92 +110,88 @@ document.getElementById("myForm").addEventListener('keyup', (e) => {
     }
 });
 
-document.getElementById('myForm').addEventListener('submit', getWeather)
+document.getElementById('addButton').addEventListener('click', getWeather)
 document.getElementById('myForm').addEventListener('keypress', getWeather)
 document.getElementById('hints').addEventListener('click', getWeather)
 
 function getWeather(e) {
-    if (e.keyCode == 13 || e.type == "submit") {
+    if (e.keyCode == 13 || e.type == "click") {
         e.preventDefault();
-        if ((document.getElementById("mainDiv").childElementCount + 1) > 9)
-        {
-            alert("You can only create nine forecasts!");
-        }
-        else{
-            let value = searchInput.value;
+        if ((document.getElementById("mainDiv").childElementCount + 1) > 9) {
+            alert("You can only create nine forecast");
+        } else {
+            let value = input.value;
             fetch(`https://api.openweathermap.org/data/2.5/forecast/hourly?q=${value},pl&units=metric&appid=bed4e5796874d1288318fc8b245e8d3e`)
-            .then((res) => res.json())
-            .then((data) => {
+                .then((res) => res.json())
+                .then((data) => {
                     const object = {
                         cityName: data.city.name,
-                        temp: data.list[1].main.temp,
+                        temp: Math.round(data.list[1].main.temp),
                         icon: data.list[1].weather[0].icon,
                         cloudy: data.list[1].clouds.all,
                         humidity: data.list[1].main.humidity,
-                        pressure: data.list[1].main.pressure,
+                        pressure: Math.round(data.list[1].main.pressure),
                         hour1: data.list[2].dt_txt,
-                        temp1: data.list[2].main.temp,
+                        temp1: Math.round(data.list[2].main.temp),
                         icon1: data.list[2].weather[0].icon,
                         hour2: data.list[3].dt_txt,
-                        temp2: data.list[3].main.temp,
+                        temp2: Math.round(data.list[3].main.temp),
                         icon2: data.list[3].weather[0].icon,
                         hour3: data.list[4].dt_txt,
-                        temp3: data.list[4].main.temp,
+                        temp3: Math.round(data.list[4].main.temp),
                         icon3: data.list[4].weather[0].icon,
                         hour4: data.list[5].dt_txt,
-                        temp4: data.list[5].main.temp,
+                        temp4: Math.round(data.list[5].main.temp),
                         icon4: data.list[5].weather[0].icon,
                         hour5: data.list[6].dt_txt,
-                        temp5: data.list[6].main.temp,
                         icon5: data.list[6].weather[0].icon,
+                        temp5: Math.round(data.list[6].main.temp),
                         hour6: data.list[7].dt_txt,
-                        temp6: data.list[7].main.temp,
+                        temp6: Math.round(data.list[7].main.temp),
                         icon6: data.list[7].weather[0].icon
                     }
                     createElement(object);
                 })
                 .catch((err) => {
                     console.log(err);
-                    alert('Cant find the city', err);
+                    alert('Nie znaleziono miasta', err);
                 });
             this.reset();
             document.getElementById('hints').innerHTML = '';
-        } 
-    }
-    else if (e.type == "click") {
+        }
+    } else if (e.type == "click") {
         e.preventDefault();
         if ((document.getElementById("mainDiv").childElementCount + 1) > 9) {
-            alert("You can only create nine forecasts!");
-        }
-        else{
+            alert("You can only create nine forecast");
+        } else {
             let value = e.target.innerText;
             fetch(`https://api.openweathermap.org/data/2.5/forecast/hourly?q=${value},pl&units=metric&appid=bed4e5796874d1288318fc8b245e8d3e`)
                 .then((res) => res.json())
                 .then((data) => {
                     var object = {
                         cityName: data.city.name,
-                        temp: data.list[1].main.temp,
+                        temp: Math.round(data.list[1].main.temp),
                         icon: data.list[1].weather[0].icon,
                         cloudy: data.list[1].clouds.all,
                         humidity: data.list[1].main.humidity,
-                        pressure: data.list[1].main.pressure,
+                        pressure: Math.round(data.list[1].main.pressure),
                         hour1: data.list[2].dt_txt,
-                        temp1: data.list[2].main.temp,
+                        temp1: Math.round(data.list[2].main.temp),
                         icon1: data.list[2].weather[0].icon,
                         hour2: data.list[3].dt_txt,
-                        temp2: data.list[3].main.temp,
+                        temp2: Math.round(data.list[3].main.temp),
                         icon2: data.list[3].weather[0].icon,
                         hour3: data.list[4].dt_txt,
-                        temp3: data.list[4].main.temp,
+                        temp3: Math.round(data.list[4].main.temp),
                         icon3: data.list[4].weather[0].icon,
                         hour4: data.list[5].dt_txt,
-                        temp4: data.list[5].main.temp,
+                        temp4: Math.round(data.list[5].main.temp),
                         icon4: data.list[5].weather[0].icon,
                         hour5: data.list[6].dt_txt,
-                        temp5: data.list[6].main.temp,
+                        temp5: Math.round(data.list[6].main.temp),
                         icon5: data.list[6].weather[0].icon,
                         hour6: data.list[7].dt_txt,
-                        temp6: data.list[7].main.temp,
+                        temp6: Math.round(data.list[7].main.temp),
                         icon6: data.list[7].weather[0].icon
                     }
                     createElement(object);
@@ -163,15 +206,19 @@ function getWeather(e) {
     }
 };
 
+const clean = () => {
+
+}
+
 /* FUNCTIONS */
-const searchInputDown = (value) => {
-    const suffix = searchInput.dataset.positioning; //px
-    document.documentElement.style.setProperty(`--${searchInput.name}`, value + suffix);
+const inputDown = (value) => {
+    const suffix = input.dataset.positioning; //px
+    document.documentElement.style.setProperty(`--${input.name}`, value + suffix);
     searchBtn[0].value = "\u21E7";
 }
-const searchInputUp = (value) => {
-    const suffix = searchInput.dataset.positioning; //px
-    document.documentElement.style.setProperty(`--${searchInput.name}`, value + suffix);
+const inputUp = (value) => {
+    const suffix = input.dataset.positioning; //px
+    document.documentElement.style.setProperty(`--${input.name}`, value + suffix);
     (searchBtn[0].value = "\u21E9");
 }
 
@@ -180,7 +227,7 @@ const createElement = (object) => {
     const el = document.createElement("div");
     el.className = "CflexElem";
     let newDiv = '';
-    newDiv=`<div class="Cfeatures">
+    newDiv = `<div class="Cfeatures">
                 <div>
                     <p>Temp:</p>
                     <p>${object.temp}°C</p>
@@ -245,3 +292,15 @@ const createElement = (object) => {
     console.log(object)
 
 }
+
+/*Google Places API */
+function activatePlacesSearch() {
+    var options = {
+        types: ['(cities)'],
+        componentRestrictions: {
+            country: "pl"
+        }
+    }
+    var input = document.getElementById('searchBar');
+    var autocomplete = new google.maps.places.Autocomplete(input, options);
+};

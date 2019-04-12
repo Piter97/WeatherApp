@@ -8,99 +8,66 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
-:root{
+:root {
     --position: -80px;
     --leftElementPosition: 0%;
     --topElementPosition: 0%;
 }
 
-body{
+body {
+
     padding: 0px;
     margin: 0px;
 }
 
-body .background_image {
+body #backgroundImage {
     position: absolute;
-    background-image: url(./images/spring.jpg);
+    background: center;
     background-repeat: no-repeat;
-    background-size: 100%;
-    filter: blur(3px);
+    background-size: cover;
+    filter: blur(2px);
     height: 100%;
     width: 100%;
     z-index: -1;
-    opacity: 0.7;
+    opacity: 0.6;
 }
 
-body .search_city {
-    position: relative;
-    display: grid;
-    width: 20em;
-    grid-template-columns: 75% 25%;
-    grid-gap: 0.2em;
-    position: fixed;
-    height: 2.5em;
-    padding: 0em;
-    left: 40%;
-    right: auto;
-    opacity: 0.5;
-    z-index: 2;
-}
-
-#myForm #input_city11 {
-    position: relative;
-    display: grid;
-    grid-template-columns: 20% 80%;
-    width: 100%;
-    height: 100%;
-    padding: 0px;
-    margin: 0px;
-    font-size: 1.5em;
-    border-radius: 5px;
-    top: var(--position) !important;
-    transition: top 1s;
-}
-
-.button{  
-    position: relative;
-    width: 80%;
-    height: 100%;
-    background-color: blue;
-    color:yellow;
-    padding: 0px;
-    font-size: 1.5em;
-    border-radius: 5px;
-}
-
-.main_flex{
+.main_flex {
     position: absolute;
     display: flex;
     flex-wrap: wrap;
     align-content: space-around;
     height: auto;
-    width: 80%;
+    width: 90%;
     padding: 0px;
-    left: 10%;
-    right: 10%;
+    left: 8%;
+    right: 8%;
     top: 5em;
+    padding: 10px;
 }
 
 
 .main_flex .CflexElem {
-    position: relative;
     display: grid;
-    grid-template: 70% 30% / 19% 79%;   /* | / --*/
+    grid-template: 70% 30% / 19% 79%;
+    /* | / --*/
+    min-width: 280px;
+    width: 30%;
+    height: 200px;
     grid-gap: 2px;
     margin: 0.3em;
-    width: 33%;
-    height: 30%;
-    margin: 0px;
-    opacity: 0.7;
+    opacity: 0.8;
     left: var(--leftElementPosition) !important;
     top: var(--topElementPosition) !important;
-    transition: transform 0.6s ease-in-out,
-                z-index,
-                opacity 0.5s ease-in-out,
-                left 1.5s;
+    /* transition: transform 0.9s ease-in-out,
+        z-index,
+        opacity 0.9s ease-in-out,
+        left 1s;
+    background-color: aqua; */
+    /* background-color: rgba(0, 255, 255, 0.288); */
+    border-radius: 8px;
+    border: solid;
+    padding: 4px;
 }
 
 .main_flex .Cfeatures {
@@ -111,14 +78,14 @@ body .search_city {
     grid-row: 1 / span 2;
 }
 
-.main_flex .Cfeatures div{
+.main_flex .Cfeatures div {
     font-weight: bold;
     text-align: center;
     font-size: 0.6em;
     margin-top: 1em;
 }
 
-.main_flex .Cfeatures div p{
+.main_flex .Cfeatures div p {
     margin: 0px;
 }
 
@@ -130,7 +97,7 @@ body .search_city {
     font-weight: bold;
 }
 
-.main_flex .Cpresent .present_image{
+.main_flex .Cpresent .present_image {
     position: absolute;
     background-image: url(./images/weather_icons/0.png);
     background-size: contain;
@@ -229,26 +196,101 @@ body .search_city {
     opacity: 0.7;
 }
 
-.main_flex .CflexElem:hover {
+/* .main_flex .CflexElem:hover {
     transform: scale(1.2);
     z-index: 1;
     opacity: 1;
-}
+} */
 
-.main_flex .CflexElem:hover {
-    transform: scale(1.2);
-    z-index: 1;
-    opacity: 1;
-}
 
-.main_flex .CflexElem:hover {
-    transform: scale(1.2);
-    z-index: 1;
-    opacity: 1;
-}
 /* Dodane przez Kube */
-ul{
+ul {
     position: absolute;
     list-style: none;
 }
 
+#searchCity {
+    background: white;
+    position: fixed;
+    height: 40px;
+    width: 300px;
+    padding: 0px;
+    left: 50%;
+    transform: translate(-50%);
+    opacity: 0.7;
+    z-index: 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 4px;
+    margin: 5px;
+
+}
+
+#searchCity input {
+    background: none;
+    border: none;
+    flex: 1;
+    height: 100%;
+    outline: none;
+
+}
+
+#searchCity i {
+    margin: 10px;
+    cursor: pointer;
+}
+
+#addButton:active {
+    transform: scale(1.1);
+}
+
+/* Kosz */
+.binColorContainer {
+    position: absolute;
+    bottom: 0;
+    background-color: rgb(255, 77, 77);
+    height: 60px;
+    width: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+
+}
+
+.binContainer {
+    position: absolute;
+    bottom: 0;
+    background: url(bin.png);
+    background-size: 3%;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    height: 60px;
+    width: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* 
+.obraz {
+    position: absolute;
+    width: 100%;
+    height: 100px;
+    background: url(bin.png);
+    background-size: 7%;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    bottom: 0px;
+    z-index: -1;
+} */
+
+.binContainer img {
+    max-height: 80%;
+}
+
+.binContainer p {
+    font-weight: bold;
+}
