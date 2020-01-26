@@ -28,7 +28,5 @@ new Sortable(binContainer, {
 const remove = () => {
   try {
     binContainer.removeChild(binContainer.firstElementChild);
-  } catch (err) {
-    console.log(err);
-  }
+  } catch (err) {}
 };

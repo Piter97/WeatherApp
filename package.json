@@ -12,7 +12,8 @@
     "http-server": "^0.12.1"
   },
   "scripts": {
-    "start": "node main.js",
+    "start": "npm run open",
+    "open": "concurrently \"http-server -a localhost -p 5000\" \"open http://localhost:5000/build\"index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

@@ -1,7 +1,4 @@
-import createForecast from "./createForecast.js";
-const input = document.getElementById("searchBar");
-const mainContainer = document.getElementById("mainDiv");
-const cityFormContainer = document.getElementById("myForm");
+import CreateForecast from "./src/CreateForecast.js";
 
 const backgroundChange = () => {
   const date = new Date();
@@ -72,22 +69,25 @@ const backgroundChange = () => {
     );
   }
 };
-document.addEventListener("load", backgroundChange());
 
 const getWeather = async e => {
   e.preventDefault();
+
+  const mainContainer = document.getElementById("mainDiv");
+  const input = document.getElementById("searchBar");
   const isFullContainer = mainContainer.childElementCount + 1 > 9;
   if (isFullContainer) {
     alert("You can only create nine forecast");
   } else {
     const apiKey = "58a933f10d950bb1099fa571bedcadea";
-    let value = input.value;
-    let apiUrl = `//api.openweathermap.org/data/2.5/forecast?q=${value},pl&appid=${apiKey}`;
+    const value = input.value;
+    const apiUrl = `//api.openweathermap.org/data/2.5/forecast?q=${value},pl&appid=${apiKey}`;
     try {
       const res = await fetch(apiUrl);
       const data = await res.json();
       const objectFromApi = assingApiToElement(data);
-      const newElement = createForecast(objectFromApi);
+      const createForecast = new CreateForecast(objectFromApi);
+      const newElement = createForecast.createForecast();
       mainContainer.appendChild(newElement);
     } catch (err) {
       alert(`There is no "${value}" city in API`);
@@ -107,7 +107,7 @@ const assingApiToElement = data => {
     temp.push(Math.round(data.list[i].main.temp - kelvinTemp));
     icon.push(data.list[i].weather[0].icon);
   }
-  let object = {
+  const object = {
     cityName: data.city.name,
     mainTemp: Math.round(data.list[1].main.temp - kelvinTemp),
     mainIcon: data.list[1].weather[0].icon,
@@ -118,7 +118,11 @@ const assingApiToElement = data => {
     temp: temp,
     icon: icon
   };
+
   return object;
 };
 
+document.addEventListener("load", backgroundChange());
+
+const cityFormContainer = document.getElementById("myForm");
 cityFormContainer.addEventListener("submit", getWeather);

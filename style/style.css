@@ -95,7 +95,7 @@ body #backgroundImage {
 
 .main_flex .Cpresent .present_image {
     position: absolute;
-    background-image: url(./images/weather_icons/0.png);
+    background-image: url(../images/weather_icons/0.png);
     background-size: contain;
     background-position-x: 50%;
     background-repeat: no-repeat;
@@ -133,66 +133,6 @@ body #backgroundImage {
 }
 
 .main_flex .Chours .hour_image {
-    position: absolute;
-    background-repeat: no-repeat;
-    background-size: contain;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    opacity: 0.7;
-}
-
-.main_flex .Chours .hour_image1 {
-    position: absolute;
-    background-repeat: no-repeat;
-    background-size: contain;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    opacity: 0.7;
-}
-
-.main_flex .Chours .hour_image2 {
-    position: absolute;
-    background-repeat: no-repeat;
-    background-size: contain;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    opacity: 0.7;
-}
-
-.main_flex .Chours .hour_image3 {
-    position: absolute;
-    background-repeat: no-repeat;
-    background-size: contain;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    opacity: 0.7;
-}
-
-.main_flex .Chours .hour_image4 {
-    position: absolute;
-    background-repeat: no-repeat;
-    background-size: contain;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    opacity: 0.7;
-}
-
-.main_flex .Chours .hour_image5 {
-    position: absolute;
-    background-repeat: no-repeat;
-    background-size: contain;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    opacity: 0.7;
-}
-
-.main_flex .Chours .hour_image6 {
     position: absolute;
     background-repeat: no-repeat;
     background-size: contain;
@@ -268,7 +208,7 @@ ul {
 .binContainer {
     position: absolute;
     bottom: 0;
-    background: url(bin.png);
+    background: url(../images/bin.png);
     background-size: 3%;
     background-repeat: no-repeat;
     background-position: 50%;
@@ -279,19 +219,6 @@ ul {
     align-items: center;
     overflow: hidden;
 }
-
-/* 
-.obraz {
-    position: absolute;
-    width: 100%;
-    height: 100px;
-    background: url(bin.png);
-    background-size: 7%;
-    background-repeat: no-repeat;
-    background-position: 50%;
-    bottom: 0px;
-    z-index: -1;
-} */
 
 .binContainer img {
     max-height: 80%;
