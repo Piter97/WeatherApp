@@ -1,2 +1,2 @@
 # WeatherApplication
-https://esy321.github.io/WeatherApplication/index.html
+https://pdybowski.github.io/WeatherApp/
