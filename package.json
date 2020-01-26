@@ -1,0 +1,33 @@
+{
+  "name": "weatherapp",
+  "version": "1.0.0",
+  "description": "weatherApp created as a project in CodersCamp ",
+  "main": "app.js",
+  "dependencies": {
+    "@babel/core": "^7.8.3",
+    "@babel/polyfill": "^7.8.3"
+  },
+  "devDependencies": {
+    "concurrently": "^5.0.2",
+    "http-server": "^0.12.1"
+  },
+  "scripts": {
+    "start": "node main.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pdybowski/WeatherApp.git"
+  },
+  "keywords": [
+    "forecast",
+    "weather",
+    "weatherapp"
+  ],
+  "author": "Piotr Dybowski",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pdybowski/WeatherApp/issues"
+  },
+  "homepage": "https://github.com/pdybowski/WeatherApp#readme"
+}

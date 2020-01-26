@@ -132,6 +132,16 @@ body #backgroundImage {
     margin-top: 0.2em;
 }
 
+.main_flex .Chours .hour_image {
+    position: absolute;
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.7;
+}
+
 .main_flex .Chours .hour_image1 {
     position: absolute;
     background-repeat: no-repeat;

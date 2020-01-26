@@ -1,30 +1,30 @@
 <!DOCTYPE html>
 <html lang="pl">
-
-<head>
-    <meta charset="utf-8" />
-    <title>Forecast</title>
-    <link rel="shortcut icon" type="image/png" href="/images/weather_icons/favicon.png"/>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
-    <link href="style.css" rel="stylesheet" type="text/css">
-</head>
-<body>
-    <form id='myForm'>
-        <div id="searchCity">
-            <i class="fas fa-city fa-lg"></i>
-            <input type="text" placeholder="Add City..." id='searchBar' required/>
-            <input type="submit" value="add" id='addButton' style="background-color:#e6f2ff"required/>
+    <head>
+        <meta charset="utf-8" />
+        <title>Forecast</title>
+        <link rel="shortcut icon" type="image/png" href="/images/weather_icons/favicon.png"/>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+            integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
+        <link href="style.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <form id='myForm'>
+            <div id="searchCity">
+                <i class="fas fa-city fa-lg"></i>
+                <input type="text" placeholder="Add City..." id='searchBar' required/>
+                <input type="submit" value="add" id='addButton' style="background-color:#e6f2ff"required/>
+            </div>
+        </form>
+        <div id="mainDiv" class="main_flex">
+            
         </div>
-    </form>
-    <div id="mainDiv" class="main_flex">
-        
-    </div>
-    <div id="binColorContainer" class="binColorContainer"></div>
-    <div id="binContainer" class="binContainer">
-    </div>
-    <script src="Sortable.js"></script>
-    <script src="sort.js"></script>
-    <script src="main.js"></script>
-</body>
+        <div id="binColorContainer" class="binColorContainer"></div>
+        <div id="binContainer" class="binContainer">
+        </div>
+        <script src="Sortable.js"></script>
+        <script src="sort.js"></script>
+        <script src="createForecast.js" type="module"></script>
+        <script src="main.js" type="module"></script>
+    </body>
 </html>
